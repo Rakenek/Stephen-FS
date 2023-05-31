@@ -9,7 +9,7 @@ module.exports = (app) => {
   );
 
   app.get(
-    'https://emaily-01en.onrender.com/auth/google/callback',
+    '/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
       res.redirect('/surveys');
