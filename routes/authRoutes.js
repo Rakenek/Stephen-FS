@@ -1,4 +1,8 @@
 const passport = require('passport');
+let redirectURI;
+if (process.env.NODE_ENV === 'production') {
+  redirectURI = 'https://emaily-01en.onrender.com/auth/google/callback';
+} else redirectURI = '/auth/google/callback';
 
 module.exports = (app) => {
   app.get(
@@ -8,13 +12,9 @@ module.exports = (app) => {
     })
   );
 
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google'),
-    (req, res) => {
-      res.redirect('/surveys');
-    }
-  );
+  app.get(redirectURI, passport.authenticate('google'), (req, res) => {
+    res.redirect('/surveys');
+  });
 
   app.get('/api/logout', (req, res) => {
     req.logout();
