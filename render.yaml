@@ -1,5 +1,4 @@
 version: 1
 buildCommand:
-  - npm ci
   - npm run build
   - npm run postbuild
