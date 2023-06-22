@@ -12,6 +12,11 @@ module.exports = (app) => {
       title,
       subject,
       body,
+      recipients: reciptients.split(',').map((email) => {
+        return { email: email.trim() };
+      }),
+      _user: req.user.id,
+      dateSent: Date.now(),
     });
   });
 };
