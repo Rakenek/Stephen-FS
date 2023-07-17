@@ -1,8 +1,10 @@
-const SurveyField = ({ input, label }) => {
+const SurveyField = ({ input, label, meta: { touched, error } }) => {
+  console.log(error);
   return (
     <div>
       <label>{label}</label>
       <input {...input} />
+      {touched && error}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { Field, reduxForm } from 'redux-form';
 import SurveyField from './SurveyField';
+import { Link } from 'react-router-dom';
 
 const FIELDS = [
   { label: 'Survey Title', name: 'title' },
@@ -32,7 +33,13 @@ const SurveyForm = ({ handleSubmit }) => {
       <div>
         <form onSubmit={handleSubmit((values) => console.log(values))}>
           {renderFields()}
-          <button type="submit">Submit</button>
+          <Link to="/surveys" className="red btn-flat white-text">
+            Cancel
+          </Link>
+          <button className="teal btn-flat right white-text" type="submit">
+            Next
+            <i className="material-icons right">done</i>
+          </button>
         </form>
       </div>
     );
@@ -41,6 +48,17 @@ const SurveyForm = ({ handleSubmit }) => {
   return render();
 };
 
+const validate = (values) => {
+  const errors = {};
+
+  if (!values.title) {
+    errors.title = 'You must provide a title';
+  }
+
+  return errors;
+};
+
 export default reduxForm({
+  validate,
   form: 'surveyForm',
 })(SurveyForm);
