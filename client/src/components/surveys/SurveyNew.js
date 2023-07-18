@@ -1,9 +1,20 @@
+import { useState } from 'react';
 import SurveyForm from './SurveyForm';
+import SurveyFormReview from './SurveyFormReview';
 
 const SurveyNew = () => {
+  const [isFormReady, setIsFormReady] = useState(false);
+
+  const handleSetFormReady = () => {
+    setIsFormReady(true);
+  };
   return (
     <div>
-      <SurveyForm />
+      {isFormReady ? (
+        <SurveyFormReview />
+      ) : (
+        <SurveyForm handleSetFormReady={handleSetFormReady} />
+      )}
     </div>
   );
 };

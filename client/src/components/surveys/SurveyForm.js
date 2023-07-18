@@ -1,6 +1,7 @@
 import { Field, reduxForm } from 'redux-form';
-import SurveyField from './SurveyField';
 import { Link } from 'react-router-dom';
+import SurveyField from './SurveyField';
+import validateEmails from '../../utils/validateEmails';
 
 const FIELDS = [
   { label: 'Survey Title', name: 'title' },
@@ -9,7 +10,7 @@ const FIELDS = [
   { label: 'Recipient List', name: 'emails' },
 ];
 
-const SurveyForm = ({ handleSubmit }) => {
+const SurveyForm = ({ handleSubmit, handleSetFormReady }) => {
   const renderFields = () => {
     return (
       <div>
@@ -31,7 +32,7 @@ const SurveyForm = ({ handleSubmit }) => {
   const render = () => {
     return (
       <div>
-        <form onSubmit={handleSubmit((values) => console.log(values))}>
+        <form onSubmit={handleSubmit(handleSetFormReady)}>
           {renderFields()}
           <Link to="/surveys" className="red btn-flat white-text">
             Cancel
@@ -51,9 +52,13 @@ const SurveyForm = ({ handleSubmit }) => {
 const validate = (values) => {
   const errors = {};
 
-  if (!values.title) {
-    errors.title = 'You must provide a title';
-  }
+  errors.emails = validateEmails(values.emails || '');
+
+  FIELDS.forEach(({ name }) => {
+    if (!values[name]) {
+      errors[name] = `You must provide a value`;
+    }
+  });
 
   return errors;
 };
