@@ -8,10 +8,14 @@ const SurveyNew = () => {
   const handleSetFormReady = () => {
     setIsFormReady(true);
   };
+  const handleCancelFormReady = () => {
+    setIsFormReady(false);
+  };
+
   return (
     <div>
       {isFormReady ? (
-        <SurveyFormReview />
+        <SurveyFormReview handleCancelFormReady={handleCancelFormReady} />
       ) : (
         <SurveyForm handleSetFormReady={handleSetFormReady} />
       )}
