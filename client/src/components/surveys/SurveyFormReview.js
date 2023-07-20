@@ -1,9 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import formFields from './formFields';
 import * as actions from '../../actions';
+import { withRouter } from 'react-router-dom';
 
-const SurveyFormReview = ({ handleCancelFormReady }) => {
+const SurveyFormReview = ({ handleCancelFormReady, history }) => {
   const formValues = useSelector((state) => state.form.surveyForm.values);
+  const dispatch = useDispatch();
 
   const reviewFields = formFields.map(({ name, label }) => {
     return (
@@ -28,7 +30,7 @@ const SurveyFormReview = ({ handleCancelFormReady }) => {
       <button
         className="green btn-flat right white-text"
         onClick={() => {
-          actions.submitSurvey(formValues);
+          dispatch(actions.submitSurvey(formValues, history));
         }}
       >
         Send Survey
@@ -38,4 +40,4 @@ const SurveyFormReview = ({ handleCancelFormReady }) => {
   );
 };
 
-export default SurveyFormReview;
+export default withRouter(SurveyFormReview);
